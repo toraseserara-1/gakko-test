@@ -57,19 +57,27 @@
         <div id="result4" class="answer"></div>
     </div>
     
-<div class="question">
+    <div class="question">
+        <h2>以下の真理値表は何回路のものか？</h2>
+        <img src="AND回路.png" alt="論理回路の画像">
+        <input type="text" id="q5">
+        <button onclick="checkAnswer(5)">回答する</button>
+        <div id="result5" class="answer"></div>
+    </div>
+
+    <div class="question">
     <h2>以下の真理値表は何回路のものか？</h2>
-    <img src="AND回路.png" alt="論理回路の画像">
-    <input type="text" id="q5">
-    <button onclick="checkAnswer(5)">回答する</button>
-    <div id="result5" class="answer"></div>
-</div>
+    <img src="OR回路.png" alt="論理回路の画像">
+    <input type="text" id="q6">
+    <button onclick="checkAnswer(6)">回答する</button>
+    <div id="result6" class="answer"></div>
+    </div>    
 
     <div id="result"></div>
 
     <script>
         // 正解の回答を定義
-        const correctAnswers = ['論理否定回路', '論理積回路', '論理和回路','排他的論理和','AND回路'];
+        const correctAnswers = ['論理否定回路', '論理積回路', '論理和回路','排他的論理和','AND回路','OR回路'];
 
         function checkAnswer(questionNumber) {
             // ユーザーの回答を取得
