@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学校2学期期末テスト</title>
+    <title>論理回路クイズ</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,62 +23,64 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+
+        .question img {
+            max-width: 100%; /* 画像が親要素を超えないようにする */
+            height: auto; /* アスペクト比を維持 */
+            margin-top: 10px; /* 画像と質問文の間に余白を設定 */
+        }
     </style>
 </head>
 <body>
 
     <h1>論理回路クイズ</h1>
 
-    <div class="question">
-        <h2>NOT回路の別名は何か？</h2>
-        <input type="text" id="q1">
-        <button onclick="checkAnswer(1)">回答する</button>
-        <div id="result1" class="answer"></div>
-    </div>
-
-    <div class="question">
-        <h2>AND回路の別名は何か？</h2>
-        <input type="text" id="q2">
-        <button onclick="checkAnswer(2)">回答する</button>
-        <div id="result2" class="answer"></div>
-    </div>
-
-    <div class="question">
-        <h2>OR回路の別名は何か？</h2>
-        <input type="text" id="q3">
-        <button onclick="checkAnswer(3)">回答する</button>
-        <div id="result3" class="answer"></div>
-    </div>
-
-    <div class="question">
-        <h2>XOR回路の別名は何か？</h2>
-        <input type="text" id="q4">
-        <button onclick="checkAnswer(4)">回答する</button>
-        <div id="result4" class="answer"></div>
-    </div>
-    
-    <div class="question">
-        <h2>以下の真理値表は何回路のものか？</h2>
-        <img src="AND回路.png" alt="論理回路の画像">
-        <input type="text" id="q5">
-        <button onclick="checkAnswer(5)">回答する</button>
-        <div id="result5" class="answer"></div>
-    </div>
-
-    <div class="question">
-    <h2>以下の真理値表は何回路のものか？</h2>
-    <img src="OR回路.png" alt="論理回路の画像">
-    <input type="text" id="q6">
-    <button onclick="checkAnswer(6)">回答する</button>
-    <div id="result6" class="answer"></div>
-    </div>    
+    <div id="questionsContainer"></div>
 
     <div id="result"></div>
 
     <script>
-        // 正解の回答を定義
-        const correctAnswers = ['論理否定回路', '論理積回路', '論理和回路','排他的論理和','AND回路','OR回路'];
+        // 質問と回答のデータ（画像のURLを含む）
+        const questions = [
+            { question: 'NOT回路の別名は何か？', answer: '論理否定回路' },
+            { question: 'AND回路の別名は何か？', answer: '論理積回路' },
+            { question: '以下の回路は何と呼ばれますか？', answer: 'AND回路', imageUrl: 'AND回路.png' },
+            { question: 'XOR回路の別名は何か？', answer: '排他的論理和回路' },
+            {question: 'NAND回路の別名は何か？',answer: '否定論理積回路'}
+        ];
 
+        // 問題の順番をランダムにシャッフル
+        const shuffledQuestions = shuffleArray(questions);
+
+        // HTMLに質問を表示
+        const questionsContainer = document.getElementById('questionsContainer');
+        shuffledQuestions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+            questionDiv.innerHTML = `
+                <h2>${q.question}</h2>
+                ${q.imageUrl ? `<img src="${q.imageUrl}" alt="論理回路の画像">` : ''}
+                <input type="text" id="q${index + 1}">
+                <button onclick="checkAnswer(${index + 1})">回答する</button>
+                <div id="result${index + 1}" class="answer"></div>
+            `;
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // ランダムに配列をシャッフルする関数
+        function shuffleArray(array) {
+            const shuffledArray = [...array];
+            for (let i = shuffledArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+            }
+            return shuffledArray;
+        }
+
+        // 正解の回答を定義
+        const correctAnswers = shuffledQuestions.map(q => q.answer);
+
+        // 各問題ごとに回答をチェックする関数
         function checkAnswer(questionNumber) {
             // ユーザーの回答を取得
             const userAnswer = document.getElementById(`q${questionNumber}`).value.trim();
