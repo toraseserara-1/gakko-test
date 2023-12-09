@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>論理回路クイズ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .answer {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>論理回路クイズ</h1>
+
+    <div class="question">
+        <h2>NOT回路の別名は何か？</h2>
+        <input type="text" id="q1">
+        <button onclick="checkAnswer(1)">回答する</button>
+        <div id="result1" class="answer"></div>
+    </div>
+
+    <div class="question">
+        <h2>AND回路の別名は何か？</h2>
+        <input type="text" id="q2">
+        <button onclick="checkAnswer(2)">回答する</button>
+        <div id="result2" class="answer"></div>
+    </div>
+
+    <div class="question">
+        <h2>OR回路の別名は何か？</h2>
+        <input type="text" id="q3">
+        <button onclick="checkAnswer(3)">回答する</button>
+        <div id="result3" class="answer"></div>
+    </div>
+
+    <div class="question">
+        <h2>XOR回路の別名は何か？</h2>
+        <input type="text" id="q4">
+        <button onclick="checkAnswer(4)">回答する</button>
+        <div id="result4" class="answer"></div>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        // 正解の回答を定義
+        const correctAnswers = ['論理否定回路', '論理積回路', '論理和回路','排他的論理和'];
+
+        function checkAnswer(questionNumber) {
+            // ユーザーの回答を取得
+            const userAnswer = document.getElementById(`q${questionNumber}`).value.trim();
+
+            // 正解と比較して結果を表示
+            const resultDiv = document.getElementById(`result${questionNumber}`);
+            if (userAnswer === correctAnswers[questionNumber - 1]) {
+                resultDiv.innerHTML = '正解！';
+                resultDiv.style.color = 'green';
+            } else {
+                resultDiv.innerHTML = '不正解。正しい回答は ' + correctAnswers[questionNumber - 1];
+                resultDiv.style.color = 'red';
+            }
+
+            // 全体の結果を表示
+            const resultSummary = document.getElementById('result');
+            const correctCount = document.querySelectorAll('.answer[style="color: green;"]').length;
+            resultSummary.innerHTML = `正解数: ${correctCount} / ${correctAnswers.length}`;
+        }
+    </script>
+
+</body>
+</html>
